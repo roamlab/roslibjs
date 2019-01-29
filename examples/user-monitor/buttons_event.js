@@ -18,7 +18,7 @@ ros.connect('ws://localhost:9090');
 // First, we create a Topic object with details of the topic's name and message type.
 var joyButtonsTopic = new ROSLIB.Topic({
   ros : ros,
-  name : '/web_jot_buttons',
+  name : '/joy',
   messageType : 'sensor_msgs/Joy'
 });
 
@@ -26,13 +26,15 @@ var joyButtonsTopic = new ROSLIB.Topic({
 // fields defined in the geometry_msgs/Twist.msg definition.
 var joy_buttons = new ROSLIB.Message({
   header : {
-    seq: 1,
-    stamp: {
-      
-    }
+    seq : 1,
+    stamp : {
+      sec : 0,
+      nsec : 0      
+    },
+    frame_id : ""
   },
   axes : [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-  buttons : [0, 0, 0, 0]
+  buttons : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 });
-// And finally, publish.
-joyButtonsTopic.publish(joy_buttons);
+// testing publish
+// joyButtonsTopic.publish(joy_buttons);

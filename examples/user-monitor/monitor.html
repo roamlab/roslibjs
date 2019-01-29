@@ -79,25 +79,291 @@
       left: 332px;
       top: 605px;
     }
+    .gwd-button-o43w {
+      position: absolute;
+      height: 30px;
+      width: 80px;
+      left: 909px;
+      top: 106px;
+    }
+    .gwd-span-1dhy {
+      position: absolute;
+      text-align: center;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 20px;
+      font-family: Arial;
+      left: 731px;
+      top: 46px;
+    }
+    .gwd-button-1659 {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 20px;
+      font-family: Arial;
+      height: 40px;
+      width: 120px;
+      left: 825px;
+      top: 267px;
+    }
+    .gwd-button-1bec {
+      width: 30px;
+      height: 80px;
+      left: 844px;
+      top: 128px;
+    }
+    .gwd-button-j4rb {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 20px;
+      font-family: Arial;
+      width: 50px;
+      height: 100px;
+      left: 992px;
+      top: 148px;
+    }
+    .gwd-button-1ctz {
+      width: 50px;
+      height: 50px;
+      left: 899px;
+      top: 152px;
+    }
+    .gwd-button-v9bl {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 20px;
+      font-family: Arial;
+      width: 60px;
+      height: 80px;
+      left: 900px;
+      top: 165px;
+    }
+    .gwd-button-7htw {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 20px;
+      font-family: Arial;
+      height: 40px;
+      width: 120px;
+      left: 825px;
+      top: 100px;
+    }
+    .gwd-button-1a9b {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 20px;
+      font-family: Arial;
+      width: 50px;
+      height: 100px;
+      left: 731px;
+      top: 148px;
+    }
+    .gwd-button-1asp {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 20px;
+      font-family: Arial;
+      width: 60px;
+      height: 80px;
+      left: 808px;
+      top: 165px;
+    }
+    .gwd-button-1cc7 {
+      top: 383px;
+    }
+    .gwd-button-dlmq {
+      top: 448px;
+    }
+    .gwd-button-1st1 {
+      top: 448px;
+    }
+    .gwd-button-v8tu {
+      top: 431px;
+    }
+    .gwd-button-l3kh {
+      top: 431px;
+    }
+    .gwd-button-1vs7 {
+      top: 550px;
+    }
+    .gwd-span-kwsc {
+      left: 686px;
+      top: 384px;
+    }
+    .gwd-button-1y5t {
+      top: 98px;
+    }
+    .gwd-button-gxmv {
+      top: 163px;
+    }
+    .gwd-button-jhp4 {
+      top: 163px;
+    }
+    .gwd-button-34y0 {
+      top: 146px;
+    }
+    .gwd-button-ttnv {
+      top: 146px;
+    }
+    .gwd-button-1y6o {
+      top: 265px;
+    }
+    .gwd-span-phcj {
+      left: 690px;
+      top: 98px;
+    }
   </style>
   <script data-source="gwdiframe_min.js" data-version="5" data-exports-type="gwd-iframe" src="gwdiframe_min.js"></script>
   <script type="text/javascript" gwd-events="support" src="gwd-events-support.1.0.js"></script>
   <script type="text/javascript" gwd-events="handlers">
+    find_action_button_id = function(event) {
+      str = event.target.id;
+      button_id_str = str.substring(str.indexOf("_") + 1, str.length);
+      button_id = parseInt(button_id_str, 10);
+      return button_id;
+    };
+    find_axes_button_info = function(event) {
+      str = event.target.id;
+      button_id_str = str.substring(str.indexOf("_") + 1, str.length);
+      button_id = parseInt(button_id_str, 10);
+      button_sign_str = str.substring(0, str.indexOf("_"));
+      var button_sign = 0.0;
+      if (button_sign_str == "axis-plus") {
+        button_sign = 1.0;
+      } else if (button_sign_str == "axis-minus") {
+        button_sign = -1.0;
+      }
+      return {
+        id: button_id,
+        sign: button_sign
+      }
+    };
     window.gwd = window.gwd || {};
-    gwd.close_button_down = function(event) {
-      var a = 0;
+    gwd.action_button_down = function(event) {
+      button_id = find_action_button_id(event);
+      joy_buttons.buttons[button_id - 1] = 1;
+      joyButtonsTopic.publish(joy_buttons);
+    };
+    gwd.action_button_finish = function(event) {
+      button_id = find_action_button_id(event);
+      joy_buttons.buttons[button_id - 1] = 0;
+      joyButtonsTopic.publish(joy_buttons);
+    };
+    gwd.axes_button_down = function(event) {
+      button_info = find_axes_button_info(event);
+      joy_buttons.axes[button_info.id - 1] = button_info.sign;
+      joy_buttons.buttons[6 - 1] = 1; /*enable button*/
+      joyButtonsTopic.publish(joy_buttons);
+    };
+    gwd.axes_button_finish = function(event) {
+      button_info = find_axes_button_info(event);
+      joy_buttons.axes[button_info.id - 1] = 0.0;
+      joy_buttons.buttons[6 - 1] = 0; /*enable button*/
+      joyButtonsTopic.publish(joy_buttons);
     };
   </script>
   <script type="text/javascript" gwd-events="registration">
     // Support code for event handling in Google Web Designer
      // This script block is auto-generated. Please do not edit!
     gwd.actions.events.registerEventHandlers = function(event) {
-      gwd.actions.events.addHandler('button_1', 'mousedown', gwd.close_button_down, false);
-      gwd.actions.events.addHandler('button_1', 'mousedown', gwd.close_button_down, false);
+      gwd.actions.events.addHandler('button_2', 'mousedown', gwd.action_button_down, false);
+      gwd.actions.events.addHandler('button_3', 'mousedown', gwd.action_button_down, false);
+      gwd.actions.events.addHandler('button_2', 'click', gwd.action_button_finish, false);
+      gwd.actions.events.addHandler('button_2', 'mouseout', gwd.action_button_finish, false);
+      gwd.actions.events.addHandler('button_3', 'click', gwd.action_button_finish, false);
+      gwd.actions.events.addHandler('button_3', 'mouseout', gwd.action_button_finish, false);
+      gwd.actions.events.addHandler('button_1', 'mousedown', gwd.action_button_down, false);
+      gwd.actions.events.addHandler('button_1', 'click', gwd.action_button_finish, false);
+      gwd.actions.events.addHandler('button_1', 'mouseout', gwd.action_button_finish, false);
+      gwd.actions.events.addHandler('button_4', 'mousedown', gwd.action_button_down, false);
+      gwd.actions.events.addHandler('button_4', 'click', gwd.action_button_finish, false);
+      gwd.actions.events.addHandler('button_4', 'mouseout', gwd.action_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_1', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-plus_1', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_1', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_1', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-minus_1', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_1', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_2', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-plus_2', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_2', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_2', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-minus_2', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_2', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_6', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-plus_6', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_6', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_6', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-minus_6', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_6', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_3', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-plus_3', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_3', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_3', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-minus_3', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_3', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_4', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-plus_4', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_4', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_4', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-minus_4', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_4', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_5', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-plus_5', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-plus_5', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_5', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.addHandler('axis-minus_5', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('axis-minus_5', 'mouseout', gwd.axes_button_finish, false);
     };
     gwd.actions.events.deregisterEventHandlers = function(event) {
-      gwd.actions.events.removeHandler('button_1', 'mousedown', gwd.close_button_down, false);
-      gwd.actions.events.removeHandler('button_1', 'mousedown', gwd.close_button_down, false);
+      gwd.actions.events.removeHandler('button_2', 'mousedown', gwd.action_button_down, false);
+      gwd.actions.events.removeHandler('button_3', 'mousedown', gwd.action_button_down, false);
+      gwd.actions.events.removeHandler('button_2', 'click', gwd.action_button_finish, false);
+      gwd.actions.events.removeHandler('button_2', 'mouseout', gwd.action_button_finish, false);
+      gwd.actions.events.removeHandler('button_3', 'click', gwd.action_button_finish, false);
+      gwd.actions.events.removeHandler('button_3', 'mouseout', gwd.action_button_finish, false);
+      gwd.actions.events.removeHandler('button_1', 'mousedown', gwd.action_button_down, false);
+      gwd.actions.events.removeHandler('button_1', 'click', gwd.action_button_finish, false);
+      gwd.actions.events.removeHandler('button_1', 'mouseout', gwd.action_button_finish, false);
+      gwd.actions.events.removeHandler('button_4', 'mousedown', gwd.action_button_down, false);
+      gwd.actions.events.removeHandler('button_4', 'click', gwd.action_button_finish, false);
+      gwd.actions.events.removeHandler('button_4', 'mouseout', gwd.action_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_1', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-plus_1', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_1', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_1', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-minus_1', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_1', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_2', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-plus_2', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_2', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_2', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-minus_2', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_2', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_6', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-plus_6', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_6', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_6', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-minus_6', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_6', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_3', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-plus_3', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_3', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_3', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-minus_3', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_3', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_4', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-plus_4', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_4', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_4', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-minus_4', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_4', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_5', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-plus_5', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-plus_5', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_5', 'mousedown', gwd.axes_button_down, false);
+      gwd.actions.events.removeHandler('axis-minus_5', 'click', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('axis-minus_5', 'mouseout', gwd.axes_button_finish, false);
     };
     document.addEventListener("DOMContentLoaded", gwd.actions.events.registerEventHandlers);
     document.addEventListener("unload", gwd.actions.events.deregisterEventHandlers);
@@ -105,11 +371,23 @@
 </head>
 
 <body class="htmlNoPages">
-  <button id="button_1" class="gwd-button-1gb7 gwd-button-mqxu" data-gwd-name="button_close">Close</button>
-  <button id="button_2" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-fhze" data-gwd-name="button_open">Open</button>
-  <button id="button_3" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-12fe" data-gwd-name="button_spread">Spread</button>
+  <button id="button_2" class="gwd-button-1gb7 gwd-button-mqxu" data-gwd-name="button_close">Close</button>
+  <button id="button_3" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-fhze" data-gwd-name="button_open">Open</button>
+  <button id="button_1" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-12fe" data-gwd-name="button_spread">Spread</button>
   <button id="button_4" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-1v9n" data-gwd-name="button_unspread">Un-Spread</button>
   <gwd-iframe id="gwd-iframe_1" source="http://127.0.0.1:8080/stream_viewer?topic=/camera/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs"></gwd-iframe>
+  <button class="gwd-button-o43w gwd-button-7htw gwd-button-1y5t" id="axis-plus_2">X+</button>
+  <button class="gwd-button-o43w gwd-button-1ctz gwd-button-1asp gwd-button-gxmv" id="axis-plus_6">Z+</button>
+  <button class="gwd-button-o43w gwd-button-1ctz gwd-button-v9bl gwd-button-jhp4" id="axis-minus_6">Z-</button>
+  <button class="gwd-button-o43w gwd-button-1bec gwd-button-1a9b gwd-button-34y0" id="axis-plus_1">Y+</button>
+  <button class="gwd-button-o43w gwd-button-1bec gwd-button-j4rb gwd-button-ttnv" id="axis-minus_1">Y-</button>
+  <button class="gwd-button-o43w gwd-button-1659 gwd-button-1y6o" id="axis-minus_2">X-</button><span class="gwd-span-1dhy gwd-span-phcj"><span class="">Translation</span></span>
+  <button class="gwd-button-o43w gwd-button-7htw gwd-button-1cc7" id="axis-plus_4">X+</button>
+  <button class="gwd-button-o43w gwd-button-1ctz gwd-button-1asp gwd-button-dlmq" id="axis-plus_5">Z+</button>
+  <button class="gwd-button-o43w gwd-button-1ctz gwd-button-v9bl gwd-button-1st1" id="axis-minus_5">Z-</button>
+  <button class="gwd-button-o43w gwd-button-1bec gwd-button-1a9b gwd-button-v8tu" id="axis-plus_3">Y+</button>
+  <button class="gwd-button-o43w gwd-button-1bec gwd-button-j4rb gwd-button-l3kh" id="axis-minus_3">Y-</button>
+  <button class="gwd-button-o43w gwd-button-1659 gwd-button-1vs7" id="axis-minus_4">X-</button><span class="gwd-span-1dhy gwd-span-kwsc"><span class="">Orientation</span></span>
 </body>
 
 </html>

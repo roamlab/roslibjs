@@ -10,8 +10,7 @@ ros.on('close', function() {
 });
 
 // Create a connection to the rosbridge WebSocket server.
-ros.connect('ws://localhost:9090');
-
+ros.connect('ws://127.0.0.1:9090');
 // Publishing a Topic
 // ------------------
 

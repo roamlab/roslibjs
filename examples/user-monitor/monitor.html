@@ -59,25 +59,25 @@
       left: 187px;
     }
     .gwd-button-mqxu {
-      left: 5px;
-      top: 605px;
+      left: 28px;
+      top: 626px;
     }
     .gwd-button-h8n7 {
       left: 366px;
       top: 619px;
     }
     .gwd-button-fhze {
-      left: 168px;
-      top: 605px;
+      left: 191px;
+      top: 626px;
     }
     .gwd-button-1v9n {
       width: 160px;
-      left: 495px;
-      top: 605px;
+      left: 191px;
+      top: 683px;
     }
     .gwd-button-12fe {
-      left: 332px;
-      top: 605px;
+      left: 28px;
+      top: 683px;
     }
     .gwd-button-o43w {
       position: absolute;
@@ -169,48 +169,85 @@
       top: 165px;
     }
     .gwd-button-1cc7 {
-      top: 383px;
+      left: 1241px;
+      top: 625px;
     }
     .gwd-button-dlmq {
-      top: 448px;
+      left: 1224px;
+      top: 690px;
     }
     .gwd-button-1st1 {
-      top: 448px;
+      left: 1316px;
+      top: 690px;
     }
     .gwd-button-v8tu {
-      top: 431px;
+      left: 1147px;
+      top: 673px;
     }
     .gwd-button-l3kh {
-      top: 431px;
+      left: 1408px;
+      top: 673px;
     }
     .gwd-button-1vs7 {
-      top: 550px;
+      left: 1241px;
+      top: 792px;
     }
     .gwd-span-kwsc {
-      left: 686px;
-      top: 384px;
+      left: 1102px;
+      top: 626px;
     }
     .gwd-button-1y5t {
-      top: 98px;
+      left: 746px;
+      top: 623px;
     }
     .gwd-button-gxmv {
-      top: 163px;
+      left: 729px;
+      top: 688px;
     }
     .gwd-button-jhp4 {
-      top: 163px;
+      left: 821px;
+      top: 688px;
     }
     .gwd-button-34y0 {
-      top: 146px;
+      left: 652px;
+      top: 671px;
     }
     .gwd-button-ttnv {
-      top: 146px;
+      left: 913px;
+      top: 671px;
     }
     .gwd-button-1y6o {
-      top: 265px;
+      left: 746px;
+      top: 790px;
     }
     .gwd-span-phcj {
-      left: 690px;
-      top: 98px;
+      left: 611px;
+      top: 623px;
+    }
+    .gwd-iframe-8eqa {
+      top: 0px;
+      left: 820px;
+    }
+    .gwd-select-1v2b {
+      position: absolute;
+      margin: 0px;
+      width: 180px;
+      height: 50px;
+      left: 393px;
+      top: 656px;
+    }
+    .gwd-span-1gyu {
+      position: absolute;
+      font-family: Arial;
+      font-weight: bold;
+      font-style: italic;
+      text-align: center;
+      font-size: 20px;
+      width: 192px;
+      height: 28px;
+      transform-origin: 95.5573px 13.879px 0px;
+      left: 390px;
+      top: 622px;
     }
   </style>
   <script data-source="gwdiframe_min.js" data-version="5" data-exports-type="gwd-iframe" src="gwdiframe_min.js"></script>
@@ -260,6 +297,9 @@
       joy_buttons.axes[button_info.id - 1] = 0.0;
       joy_buttons.buttons[6 - 1] = 0; /*enable button*/
       joyButtonsTopic.publish(joy_buttons);
+    };
+    gwd.comd_ref_change = function(event) {
+      var a = 0;
     };
   </script>
   <script type="text/javascript" gwd-events="registration">
@@ -314,6 +354,8 @@
       gwd.actions.events.addHandler('axis-minus_5', 'mousedown', gwd.axes_button_down, false);
       gwd.actions.events.addHandler('axis-minus_5', 'click', gwd.axes_button_finish, false);
       gwd.actions.events.addHandler('axis-minus_5', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.addHandler('select_1', 'change', gwd.comd_ref_change, false);
+      gwd.actions.events.addHandler('select_1', 'change', gwd.comd_ref_change, false);
     };
     gwd.actions.events.deregisterEventHandlers = function(event) {
       gwd.actions.events.removeHandler('button_2', 'mousedown', gwd.action_button_down, false);
@@ -364,6 +406,8 @@
       gwd.actions.events.removeHandler('axis-minus_5', 'mousedown', gwd.axes_button_down, false);
       gwd.actions.events.removeHandler('axis-minus_5', 'click', gwd.axes_button_finish, false);
       gwd.actions.events.removeHandler('axis-minus_5', 'mouseout', gwd.axes_button_finish, false);
+      gwd.actions.events.removeHandler('select_1', 'change', gwd.comd_ref_change, false);
+      gwd.actions.events.removeHandler('select_1', 'change', gwd.comd_ref_change, false);
     };
     document.addEventListener("DOMContentLoaded", gwd.actions.events.registerEventHandlers);
     document.addEventListener("unload", gwd.actions.events.deregisterEventHandlers);
@@ -375,7 +419,8 @@
   <button id="button_3" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-fhze" data-gwd-name="button_open">Open</button>
   <button id="button_1" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-12fe" data-gwd-name="button_spread">Spread</button>
   <button id="button_4" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-1v9n" data-gwd-name="button_unspread">Un-Spread</button>
-  <gwd-iframe id="gwd-iframe_1" source="http://127.0.0.1:8080/stream_viewer?topic=/camera/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs"></gwd-iframe>
+  <gwd-iframe id="gwd-iframe_1" source="http://127.0.0.1:8080/stream_viewer?topic=/camera_end_effector/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs"></gwd-iframe>
+  <gwd-iframe id="gwd-iframe_2" source="http://127.0.0.1:8080/stream_viewer?topic=/camera_world/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs gwd-iframe-8eqa"></gwd-iframe>
   <button class="gwd-button-o43w gwd-button-7htw gwd-button-1y5t" id="axis-plus_2">X+</button>
   <button class="gwd-button-o43w gwd-button-1ctz gwd-button-1asp gwd-button-gxmv" id="axis-plus_6">Z+</button>
   <button class="gwd-button-o43w gwd-button-1ctz gwd-button-v9bl gwd-button-jhp4" id="axis-minus_6">Z-</button>
@@ -388,6 +433,10 @@
   <button class="gwd-button-o43w gwd-button-1bec gwd-button-1a9b gwd-button-v8tu" id="axis-plus_3">Y+</button>
   <button class="gwd-button-o43w gwd-button-1bec gwd-button-j4rb gwd-button-l3kh" id="axis-minus_3">Y-</button>
   <button class="gwd-button-o43w gwd-button-1659 gwd-button-1vs7" id="axis-minus_4">X-</button><span class="gwd-span-1dhy gwd-span-kwsc"><span class="">Orientation</span></span>
+  <select id="select_1" class="gwd-select-1v2b" data-gwd-name="camera_select">
+    <option value="&quot;world&quot;" selected="">world camera</option>
+    <option value="&quot;end-effector&quot;">end-effector camera</option>
+  </select><span class="gwd-span-1gyu">Referenced Camera</span>
 </body>
 
 </html>

@@ -243,11 +243,11 @@
       font-style: italic;
       text-align: center;
       font-size: 20px;
-      width: 192px;
       height: 28px;
-      transform-origin: 95.5573px 13.879px 0px;
       left: 390px;
       top: 622px;
+      width: 204px;
+      transform-origin: 101.519px 13.875px 0px;
     }
   </style>
   <script data-source="gwdiframe_min.js" data-version="5" data-exports-type="gwd-iframe" src="gwdiframe_min.js"></script>
@@ -299,7 +299,13 @@
       joyButtonsTopic.publish(joy_buttons);
     };
     gwd.comd_ref_change = function(event) {
-      var a = 0;
+      command_reference = event.target.value;
+      if (command_reference == "end-effector") {
+        command_frame_reference.data = "joy_tool_frame_3.cfg";
+      } else if (command_reference == "world") {
+        command_frame_reference.data = "joy_base_frame.cfg";
+      } else if (command_reference == "marker-control") {}
+      comdFrameTopic.publish(command_frame_reference);
     };
   </script>
   <script type="text/javascript" gwd-events="registration">
@@ -434,9 +440,9 @@
   <button class="gwd-button-o43w gwd-button-1bec gwd-button-j4rb gwd-button-l3kh" id="axis-minus_3">Y-</button>
   <button class="gwd-button-o43w gwd-button-1659 gwd-button-1vs7" id="axis-minus_4">X-</button><span class="gwd-span-1dhy gwd-span-kwsc"><span class="">Orientation</span></span>
   <select id="select_1" class="gwd-select-1v2b" data-gwd-name="camera_select">
-    <option value="&quot;world&quot;" selected="">world camera</option>
-    <option value="&quot;end-effector&quot;">end-effector camera</option>
-  </select><span class="gwd-span-1gyu">Referenced Camera</span>
+    <option value="world" selected="">world camera</option>
+    <option value="end-effector">end-effector camera</option>
+  </select><span class="gwd-span-1gyu">Command Reference</span>
 </body>
 
 </html>

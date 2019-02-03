@@ -304,7 +304,9 @@
         command_frame_reference.data = "joy_tool_frame_3.cfg";
       } else if (command_reference == "world") {
         command_frame_reference.data = "joy_base_frame.cfg";
-      } else if (command_reference == "marker-control") {}
+      } else if (command_reference == "marker-control") {
+        command_frame_reference.data = "marker_control.cfg";
+      }
       comdFrameTopic.publish(command_frame_reference);
     };
   </script>
@@ -425,8 +427,8 @@
   <button id="button_3" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-fhze" data-gwd-name="button_open">Open</button>
   <button id="button_1" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-12fe" data-gwd-name="button_spread">Spread</button>
   <button id="button_4" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-1v9n" data-gwd-name="button_unspread">Un-Spread</button>
-  <gwd-iframe id="gwd-iframe_1" source="http://127.0.0.1:8080/stream_viewer?topic=/camera_end_effector/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs"></gwd-iframe>
-  <gwd-iframe id="gwd-iframe_2" source="http://127.0.0.1:8080/stream_viewer?topic=/camera_world/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs gwd-iframe-8eqa"></gwd-iframe>
+  <gwd-iframe id="gwd-iframe_1" source="http://127.0.0.1:8080/stream_viewer?topic=/camera_world/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs"></gwd-iframe>
+  <gwd-iframe id="gwd-iframe_2" source="http://127.0.0.1:8080/stream_viewer?topic=/camera_end_effector/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs gwd-iframe-8eqa"></gwd-iframe>
   <button class="gwd-button-o43w gwd-button-7htw gwd-button-1y5t" id="axis-plus_2">X+</button>
   <button class="gwd-button-o43w gwd-button-1ctz gwd-button-1asp gwd-button-gxmv" id="axis-plus_6">Z+</button>
   <button class="gwd-button-o43w gwd-button-1ctz gwd-button-v9bl gwd-button-jhp4" id="axis-minus_6">Z-</button>
@@ -442,6 +444,7 @@
   <select id="select_1" class="gwd-select-1v2b" data-gwd-name="camera_select">
     <option value="world" selected="">world camera</option>
     <option value="end-effector">end-effector camera</option>
+    <option value="marker-control">Rviz interactive marker</option>
   </select><span class="gwd-span-1gyu">Command Reference</span>
 </body>
 

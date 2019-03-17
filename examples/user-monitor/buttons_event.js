@@ -41,9 +41,11 @@ var comdFrameTopic = new ROSLIB.Topic({
   messageType : 'std_msgs/String'
 });
 
-var command_frame_reference = new ROSLIB.Message({
+var command_reference_msg = new ROSLIB.Message({
   data : ""
 });
+
+var command_reference = "world";
 
 // Messages
 

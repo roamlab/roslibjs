@@ -52,3 +52,16 @@ var command_reference = "world";
 
 // testing publish
 // joyButtonsTopic.publish(joy_buttons);
+
+// topic and var for enabling autonomous go
+var enableAutoTopic = new ROSLIB.Topic({
+  ros : ros,
+  name : '/enable_camera_auto',
+  messageType : 'std_msgs/Int32'
+});
+
+var enable_auto_msg = new ROSLIB.Message({
+  data : ""
+});
+
+var autonomous_go_available = false;

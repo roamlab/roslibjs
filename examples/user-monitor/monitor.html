@@ -225,8 +225,8 @@
       top: 623px;
     }
     .gwd-iframe-8eqa {
-      left: 806px;
-      top: -102px;
+      left: 820px;
+      top: 0px;
     }
     .gwd-select-1v2b {
       position: absolute;
@@ -260,6 +260,11 @@
       top: 721px;
       width: 130px;
       left: 412px;
+    }
+    .gwd-button-gqzd {
+      width: 200px;
+      left: 82px;
+      top: 752px;
     }
   </style>
   <script data-source="gwdiframe_min.js" data-version="5" data-exports-type="gwd-iframe" src="gwdiframe_min.js"></script>
@@ -318,6 +323,7 @@
         command_reference_msg.data = "joy_base_frame.cfg";
       } else if (command_reference == "marker-control") {
         command_reference_msg.data = "marker_control.cfg";
+        autonomous_go_available = true;
       }
       comdFrameTopic.publish(command_reference_msg);
     };
@@ -336,6 +342,13 @@
         alert("Fast speed is only allowed when using world camera.");
         event.target.checked = false;
       };
+    };
+    gwd.autonomous_go = function(event) {
+      if (autonomous_go_available) {
+        enable_auto_msg.data = 1;
+        enableAutoTopic.publish(enable_auto_msg);
+        autonomous_go_available = false;
+      }
     };
   </script>
   <script type="text/javascript" gwd-events="registration">
@@ -392,6 +405,7 @@
       gwd.actions.events.addHandler('axis-minus_5', 'mouseout', gwd.axes_button_finish, false);
       gwd.actions.events.addHandler('select_1', 'change', gwd.comd_ref_change, false);
       gwd.actions.events.addHandler('checkbox_fast_speed', 'change', gwd.comd_speed_change, false);
+      gwd.actions.events.addHandler('autonomous_button', 'click', gwd.autonomous_go, false);
     };
     gwd.actions.events.deregisterEventHandlers = function(event) {
       gwd.actions.events.removeHandler('button_2', 'mousedown', gwd.action_button_down, false);
@@ -444,6 +458,7 @@
       gwd.actions.events.removeHandler('axis-minus_5', 'mouseout', gwd.axes_button_finish, false);
       gwd.actions.events.removeHandler('select_1', 'change', gwd.comd_ref_change, false);
       gwd.actions.events.removeHandler('checkbox_fast_speed', 'change', gwd.comd_speed_change, false);
+      gwd.actions.events.removeHandler('autonomous_button', 'click', gwd.autonomous_go, false);
     };
     document.addEventListener("DOMContentLoaded", gwd.actions.events.registerEventHandlers);
     document.addEventListener("unload", gwd.actions.events.deregisterEventHandlers);
@@ -454,9 +469,10 @@
   <button id="button_2" class="gwd-button-1gb7 gwd-button-mqxu" data-gwd-name="button_close">Close</button>
   <button id="button_3" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-fhze" data-gwd-name="button_open">Open</button>
   <button id="button_1" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-12fe" data-gwd-name="button_spread">Roll-Out</button>
+  <button id="autonomous_button" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-12fe gwd-button-gqzd" data-gwd-name="autonomous_button">Autonomous Go</button>
   <button id="button_4" class="gwd-button-1gb7 gwd-button-pbmh gwd-button-h8n7 gwd-button-1v9n" data-gwd-name="button_unspread">Roll-In</button>
   <gwd-iframe id="gwd-iframe_1" source="http://127.0.0.1:8080/stream_viewer?topic=/camera_world/image_raw&amp;type=ros_compressed" class="gwd-iframe-1yvs"></gwd-iframe>
-  <gwd-iframe id="gwd-iframe_2" source="http://127.0.0.1:8080/stream_viewer?topic=/dope/rgb_points" class="gwd-iframe-1yvs gwd-iframe-8eqa"></gwd-iframe>
+  <gwd-iframe id="gwd-iframe_2" class="gwd-iframe-1yvs gwd-iframe-8eqa" source="http://127.0.0.1:8080/stream_viewer?topic=/dope/rgb_points"></gwd-iframe>
   <button class="gwd-button-o43w gwd-button-7htw gwd-button-1y5t" id="axis-plus_2">X+</button>
   <button class="gwd-button-o43w gwd-button-1ctz gwd-button-1asp gwd-button-gxmv" id="axis-plus_6">Z+</button>
   <button class="gwd-button-o43w gwd-button-1ctz gwd-button-v9bl gwd-button-jhp4" id="axis-minus_6">Z-</button>
@@ -472,7 +488,7 @@
   <select id="select_1" class="gwd-select-1v2b" data-gwd-name="camera_select">
     <option value="world" selected="">world camera</option>
     <option value="end-effector">end-effector camera</option>
-    <option value="marker-control">Rviz interactive marker</option>
+    <option value="marker-control">Autonomous Go</option>
   </select><span class="gwd-span-1gyu">Command Reference</span>
   <span class="gwd-span-1gyu gwd-span-kfr9">Fast Speed</span>
   <input type="checkbox" id="checkbox_fast_speed" class="gwd-input-15ga">
